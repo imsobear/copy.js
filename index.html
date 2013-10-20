@@ -9,40 +9,58 @@
     <link rel="stylesheet" media="screen" href="stylesheets/stylesheet.css">
     <link rel="stylesheet" href="./src/copy.css">
     <style>
-      .copy-content {
-        margin-bottom: 10px;
-      }
+        .copy-content {
+            margin-bottom: 10px;
+        }
+        .main-code {
+            max-width: 640px;
+            padding: 20px 10px;
+            margin: 0 auto;
+        }
     </style>
     <title>Copy.js</title>
   </head>
   <body>
 
-    <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/tomayday/copy.js">View on GitHub</a>
-          <h1 id="project_title">Copy.js</h1>
+            <a id="forkme_banner" href="https://github.com/tomayday/copy.js">View on GitHub</a>
+            <h1 id="project_title">Copy.js</h1>
         </header>
     </div>
 
-    <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <ul>
-          <li class="copy-content">Hover on me and see what happend！</li>
-          <li class="copy-content">Just Test</li>
-          <li class="copy-content">Copy.js maintained by sobear</li>
-          <li class="copy-content">How to copy to the clipboard in JavaScript?</li>
-        </ul>
-      </section>
+        <section id="main_content" class="inner">
+            <h2>DEMO:</h2>
+            <ul>
+                <li class="copy-content">Hover on me and see what happend！</li>
+                <li class="copy-content">Just Test</li>
+                <li class="copy-content">Copy.js maintained by sobear</li>
+                <li class="copy-content">How to copy to the clipboard in JavaScript?</li>
+            </ul>
+        </section>
+
+        <section class="main-code">
+            <h2>源码分析：</h2>
+                <ul>
+                    <li class="code-item">
+                        <h4>1. 如何选中文字：</h4>
+                    </li>
+                    <li class="code-item">
+                        <h4>2. 监听 ctrl + c 键盘事件：</h4>
+                    </li>
+                    <li class="code-item">
+                        <h4>3. 复制文字：</h4>
+                    </li>
+                </ul>   
+        </section>
     </div>
 
-    <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Copy.js maintained by sobear</p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
+        <footer class="inner">
+            <p class="copyright">Copy.js maintained by sobear</p>
+            <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+        </footer>
     </div>
     
     <script src="./src/copy.js"></script>
