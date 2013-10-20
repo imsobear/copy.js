@@ -10,26 +10,68 @@
         margin: 0;
         padding: 0;
     }
+    .inner {
+        width: 500px;
+        margin: 100px auto;
+        background-color: #ddd;
+        padding: 50px 20px;
+    }
+    .copy-content {
+        margin-bottom: 10px;
+    }
     </style>
 </head>
 <body>
-    <p class="copy-content">Just Test！</p>
-    <p class="copy-content">ahha</p>
+
+    <section id="main_content" class="inner">
+        <ul>
+          <li class="copy-content">Hover on me and see what happend！</li>
+          <li class="copy-content">Just Test</li>
+          <li class="copy-content">Copy.js maintained by sobear</li>
+          <li class="copy-content">How to copy to the clipboard in JavaScript?</li>
+      </ul>
+    </section>
 
     <script src="./src/copy.js"></script>
     <script>
-        function delay (second, func) {
-            setTimeout(func, second * 1000);
+        function getElementsByClassName(name, parent) {
+          var parent = parent || document;
+          if (document.getElementsByClassName) {
+            return parent.getElementsByClassName(name);
+          }
+
+          var allElems = parent.getElementsByTagName('*'),
+              result = [];
+
+          for (var i = 0, l = allElems.lenght; i < l; i++) {
+            var elem = allElems[i];
+            if (~elem.className.split().indexOf(name)) {
+              result.push(elem);
+            }
+          }
+
+          return result;
         }
-        var ps = document.querySelectorAll('.copy-content');
+
+        function addEventListener (elem, type, func) {
+          if (elem.addEventListener) {
+            elem.addEventListener(type, func, false);
+          } else {
+            elem.attachEvent('on' + type, func);
+          }
+          return;
+        }
+
+
+        var ps = getElementsByClassName('copy-content');
 
         for (var i = 0, l = ps.length; i < l; i++) {
             var p = ps[i];
 
-            p.addEventListener('mouseenter', function (e) {
+            addEventListener(p, 'mouseenter', function (e) {
                 copy.selectText(this);
             });
-            p.addEventListener('mouseleave', function (e) {
+            addEventListener(p, 'mouseleave', function (e) {
                 copy.cancleSelected(this);
             });
         }
