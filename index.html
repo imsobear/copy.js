@@ -6,14 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Copy.js : copy by js !" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="https://raw.github.com/tomayday/copy.js/master/src/copy.css">
-
-    <script type="text/javaScript" src="https://raw.github.com/tomayday/copy.js/master/src/copy.js"></script>
-
+    <link rel="stylesheet" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" href="./src/copy.css">
+    <style>
+      .copy-content {
+        margin-bottom: 10px;
+      }
+    </style>
     <title>Copy.js</title>
   </head>
-
   <body>
 
     <!-- HEADER -->
@@ -43,19 +44,47 @@
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-
+    
+    <script src="./src/copy.js"></script>
     <script>
+        function getElementsByClassName(name, parent) {
+          var parent = parent || document;
+          if (document.getElementsByClassName) {
+            return parent.getElementsByClassName(name);
+          }
 
-    <script>
-        var ps = document.querySelectorAll('.copy-content');
+          var allElems = parent.getElementsByTagName('*'),
+              result = [];
+
+          for (var i = 0, l = allElems.lenght; i < l; i++) {
+            var elem = allElems[i];
+            if (~elem.className.split().indexOf(name)) {
+              result.push(elem);
+            }
+          }
+
+          return result;
+        }
+
+        function addEventListener (elem, type, func) {
+          if (elem.addEventListener) {
+            elem.addEventListener(type, func, false);
+          } else {
+            elem.attachEvent('on' + type, func);
+          }
+          return;
+        }
+
+
+        var ps = getElementsByClassName('copy-content');
 
         for (var i = 0, l = ps.length; i < l; i++) {
             var p = ps[i];
 
-            p.addEventListener('mouseenter', function (e) {
+            addEventListener(p, 'mouseenter', function (e) {
                 copy.selectText(this);
             });
-            p.addEventListener('mouseleave', function (e) {
+            addEventListener(p, 'mouseleave', function (e) {
                 copy.cancleSelected(this);
             });
         }

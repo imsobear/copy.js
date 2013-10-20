@@ -1,15 +1,48 @@
 (function (doc) {
+    
+    var body = doc.body;
+    
     // 提供一些兼容性的方法
     var util = {
+        getElementsByClassName: function (name, parent) {
+            var parent = parent || document;
+            
+            if (document.getElementsByClassName) {
+                return parent.getElementsByClassName(name);
+            }
+
+            var allElems = parent.getElementsByTagName('*'),
+            result = [];
+
+            for (var i = 0, l = allElems.lenght; i < l; i++) {
+                var elem = allElems[i];
+                if (~elem.className.split().indexOf(name)) {
+                  result.push(elem);
+                }
+            }
+
+            return result;
+        },
+
+        addEventListener: function (elem, type, func) {
+            if (elem.addEventListener) {
+                elem.addEventListener(type, func, false);
+            } else {
+                elem.attachEvent('on' + type, func);
+            }
+            return;
+        },
+
+        removeEventListener: function (elem, type, func) {
+            if (elem.removeEventListener) {
+                elem.removeEventListener(type);
+            } else {
+                elem.detachEventListener('on' + type);
+            }
+        },
         // 延时函数
         delay: function (second, func) {
             setTimeout(func, second * 1000);
-        },
-        show: function (elem) {
-            elem.css('display', 'block');
-        },
-        hide: function (elem) {
-            elem.css('display', 'none');
         }
     };
 
@@ -25,7 +58,7 @@
         this.success = doc.createElement('span');
         this.success.className = 'success-tip';
         this.success.innerHTML = '复制成功！';
-        doc.body.appendChild(this.success);
+        body.appendChild(this.success);
         // this.success = doc.getElementsByClassName('success-tip')[0];
 
         return this;
@@ -39,9 +72,9 @@
             selection;
 
         // 选中
-        if (doc.body.createTextRange) {
+        if (body.createTextRange) {
             // IE
-            range = doc.body.createTextRange();
+            range = body.createTextRange();
             range.moveToElementText(text);
             range.select();
         } else if (window.getSelection) {
@@ -69,9 +102,9 @@
             range,
             selection;
 
-        if (doc.body.createTextRange) {
+        if (body.createTextRange) {
             // IE
-            range = doc.body.createTextRange();
+            range = body.createTextRange();
             range.moveToElementText(text);
         } else if (window.getSelection) {
             // Others
@@ -92,7 +125,7 @@
         // 显示ctrl + c的提示信息
         self.copytip.style.display =  'inline';
         // 绑定键盘事件
-        doc.addEventListener('keydown', function (e) {
+        util.addEventListener(doc, 'keydown', function (e) {
             if (e.ctrlKey && e.keyCode === 67) {
                 // 按下 ctrl + c
                 self.success.style.display = 'inline';
@@ -105,7 +138,7 @@
     Copy.prototype._removeKeyDown = function () {
         this.copytip.style.display = 'none';
         this.success.style.display = 'none';
-        doc.removeEventListener('keydown');
+        util.removeEventListener(doc, 'keydown');
     };
 
     // Copy.prototype.
