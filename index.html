@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript 复制文本</title>
+    <link rel="stylesheet" href="./src/copy.css">
+    <style>
+    body {
+        font: 14px/1.5 Helvetica, Arial;
+        margin: 0;
+        padding: 0;
+    }
+    </style>
+</head>
+<body>
+    <p class="copy-content">Just Test！</p>
+    <p class="copy-content">ahha</p>
+
+    <script src="./src/copy.js"></script>
+    <script>
+        function delay (second, func) {
+            setTimeout(func, second * 1000);
+        }
+        var ps = document.querySelectorAll('.copy-content');
+
+        for (var i = 0, l = ps.length; i < l; i++) {
+            var p = ps[i];
+
+            p.addEventListener('mouseenter', function (e) {
+                copy.selectText(this);
+            });
+            p.addEventListener('mouseleave', function (e) {
+                copy.cancleSelected(this);
+            });
+        }
+    </script>
+</body>
+</html>
