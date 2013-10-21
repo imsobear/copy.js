@@ -17,6 +17,10 @@
             padding: 20px 10px;
             margin: 0 auto;
         }
+        .code-item p {
+            background-color: #fff;
+            padding: 10px;
+        }
     </style>
     <title>Copy.js</title>
   </head>
@@ -41,16 +45,79 @@
         </section>
 
         <section class="main-code">
-            <h2>源码分析：</h2>
+            <h2><a href="https://github.com/tomayday/copy.js/blob/master/src/copy.js" target="_blank">源码分析</a>：</h2>
                 <ul>
                     <li class="code-item">
                         <h4>1. 如何选中文字：</h4>
+                        <pre>
+    function selectText (element) {
+        var text = element,
+            range,
+            selection;
+
+        if (body.createTextRange) {
+            // IE
+            range = body.createTextRange();
+            range.moveToElementText(text);
+            range.select();
+        } else if (window.getSelection) {
+            // Others
+            selection = window.getSelection();
+            range = doc.createRange();
+            range.selectNodeContents(text);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        } else {
+            return false;
+        }
+    }
+                        </pre>
                     </li>
                     <li class="code-item">
                         <h4>2. 监听 ctrl + c 键盘事件：</h4>
+                        <pre>
+        document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.keyCode === 67) {
+                // 按下ctrl +c 
+            };
+        });
+                        </pre>
                     </li>
                     <li class="code-item">
                         <h4>3. 复制文字：</h4>
+                        <pre>因为安全问题，除IE以外的浏览器禁止用JS复制内容到剪切板，目前的解决方案都是<strong>flash</strong>.</pre>
+                    </li>
+                    <li class="code-item">
+                        <h4>附：属性选择器</h4>
+                        <p>对于 icon 类的标签，我们再也不需要对其加一个对于icon的公用类名，只需要类名是以 icon- 开头就可以匹配所有 icon.</p>
+                        <pre>
+                            // 以前要这样写
+                            &ltul class="list">
+                                &ltli class="item item1">item1&lt/li>
+                                &ltli class="item item2">item2&lt/li>
+                                &ltli class="item item3">item3&lt/li>
+                            &lt/ul>
+                            .item {
+                                /*公用样式*/
+                            }
+                            item1 {
+                                /*私有样式*/
+                            }
+                        </pre>
+                        <pre style="margin-top:20px;">
+                            // 现在只要这样写：
+                            &ltul class="list">
+                                &ltli class="item1">item1&lt/li>
+                                &ltli class="item2">item2&lt/li>
+                                &ltli class="item3">item3&lt/li>
+                            &lt/ul>
+                            [class^="item-"] {
+                                /*公用样式*/
+                            }
+                            [class="item-1"] {
+                                /*私有样式*/
+                            }
+                        </pre>
                     </li>
                 </ul>   
         </section>
