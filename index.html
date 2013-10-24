@@ -22,6 +22,7 @@
             padding: 10px;
         }
     </style>
+    <script src="http://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
     <title>Copy.js</title>
   </head>
   <body>
@@ -132,22 +133,32 @@
     
     <script src="./src/copy.js"></script>
     <script>
+        if (!Array.prototype.indexOf) {
+            Array.prototype.indexOf = function (obj, fromIndex) {
+                var index = fromIndex || 0;
+                for(var i = index, l = this.length; i < l; i++) {
+                    if (this[i] == obj) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
+        }
+
         function getElementsByClassName(name, parent) {
           var parent = parent || document;
           if (document.getElementsByClassName) {
             return parent.getElementsByClassName(name);
           }
-
+          
           var allElems = parent.getElementsByTagName('*'),
               result = [];
-
-          for (var i = 0, l = allElems.lenght; i < l; i++) {
+          for (var i = 0, l = allElems.length; i < l; i++) {
             var elem = allElems[i];
             if (~elem.className.split().indexOf(name)) {
               result.push(elem);
             }
           }
-
           return result;
         }
 
@@ -160,17 +171,17 @@
           return;
         }
 
-
         var ps = getElementsByClassName('copy-content');
 
         for (var i = 0, l = ps.length; i < l; i++) {
             var p = ps[i];
-
             addEventListener(p, 'mouseenter', function (e) {
-                copy.selectText(this);
+                var self = e.target || window.event.srcElement;
+                copy.selectText(self);
             });
             addEventListener(p, 'mouseleave', function (e) {
-                copy.cancleSelected(this);
+                var self = e.target || window.event.srcElement;
+                copy.cancleSelected(self);
             });
         }
     </script>
